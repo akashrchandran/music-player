@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/nolan/1600/audio-wave.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"/>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+</head>
+<body>
+    <div class="player-container">
+        <div class="img-container">
+            <label for="file-input">
+            <img src="https://e-cdns-images.dzcdn.net/images/cover/256d2f17d6dfde632b845e757ac41746/500x500-000000-80-0-0.jpg" alt="Album art">
+            </label>
+            <input id="file-input" type="file" multiple accept="audio/*" hidden/>
+        </div>
+        <h2 id="title">Lonely</h2>
+        <h3 id="artist">2 Souls</h3>
+        <audio src="music/1. Lonely.mp3" controls hidden></audio>
+        <div class="progress-container" id="progress-container">
+            <div class="progress" id="progress"></div>
+            <div class="duration-wrapper">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
+        <div class="player-controls">
+            <i class="fas fa-backward" id="prev" title="Previous"></i>
+            <i class="fas fa-play main-button" id="play" title="Play"></i>
+            <i class="fas fa-forward" id="next" title="Next"></i>
+        </div>
+    </div>
+    <!-- Script -->
+    <script src="script.js"></script>
+</body>
+</html>
