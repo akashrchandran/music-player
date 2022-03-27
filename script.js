@@ -97,12 +97,18 @@ function newAudioFile(index) {
             for (let i = 0; i < data.length; i++) {
                 base64String += String.fromCharCode(data[i]);
             }
-			titleEl.textContent = tag.tags.title;
-			artistEl.textContent = tag.tags.artist;
+            let {title, artist} = tag.tags;
+            if (title.length > 30) {
+                title = `${title.substring(0, 30)}...`
+            }
+            if (artist.length > 30) {
+                artist = `${artist.substring(0, 30)}...`
+            }
+			titleEl.textContent = title;
+			artistEl.textContent = artist;
 			image.src = image_blur = `data:${format};base64,${window.btoa(base64String)}`;
 			music.src = URL.createObjectURL(file);
-            console.log(URL.createObjectURL(file))
-			music.load();
+            music.load();
 			playSong();
         },
         onError: function (error) {
@@ -131,3 +137,9 @@ progressContainer.addEventListener("click", setProgressBar);
 next.addEventListener('click', playNext);
 prev.addEventListener('click', playPrevious);
 music.addEventListener('ended', playNext);
+document.addEventListener('keypress', (e) => {
+    console.log(e);
+    if (e.key === ' ') {
+        isPlaying ? pauseSong() : playSong();
+    }
+})
