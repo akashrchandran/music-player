@@ -1,4 +1,5 @@
-const jsmediatags = window.jsmediatags;
+const { jsmediatags } = window;
+const playerContainer = document.getElementById("player-container");
 const image = document.querySelector("img");
 const inputFiles = document.getElementById("file-input");
 const titleEl = document.getElementById("title");
@@ -16,8 +17,17 @@ let isPlaying = false;
 let currentSongIndex = 0;
 let songList = [];
 
+function getImgColor() {
+    const colorThief = new ColorThief();
+    if (image.complete)
+        color = colorThief.getColor(image);
+    return color;
+}
+
 function playSong() {
     document.body.style.backgroundImage = `url('${image_blur}')`;
+    const [ r, g, b ] = getImgColor();
+    playerContainer.style.backgroundColor = `rgb(${r}, ${g}, ${b}, 0.5)`;
     play.classList.replace("fa-play", "fa-pause");
     play.setAttribute("title", "Pause");
     if (!isPlaying) {
@@ -28,6 +38,7 @@ function playSong() {
 
 function pauseSong() {
     isPlaying = false;
+    playerContainer.style.backgroundColor = `rgb(231, 231, 231, 0.5)`;
     document.body.style.backgroundImage = '';
     play.classList.replace("fa-pause", "fa-play");
     play.setAttribute("title", "Play");
@@ -68,8 +79,7 @@ function setProgressBar(event) {
 function playNext() {
     isPlaying = false;
     currentSongIndex++;
-    if (currentSongIndex > songList.length - 1)
-    {
+    if (currentSongIndex > songList.length - 1) {
         currentSongIndex = 0;
     }
     newAudioFile(currentSongIndex)
@@ -78,8 +88,7 @@ function playNext() {
 function playPrevious() {
     isPlaying = false;
     currentSongIndex--;
-    if (currentSongIndex === -1)
-    {
+    if (currentSongIndex === -1) {
         currentSongIndex = songList.length - 1;
     }
     console.log(currentSongIndex);
@@ -91,25 +100,24 @@ function newAudioFile(index) {
     jsmediatags.read(file, {
         onSuccess: function (tag) {
             console.log(tag.tags.artist);
-            const data = tag.tags.picture.data;
-            const format = tag.tags.picture.format;
+            const { data, format } = tag.tags.picture;
             let base64String = "";
             for (let i = 0; i < data.length; i++) {
                 base64String += String.fromCharCode(data[i]);
             }
-            let {title, artist} = tag.tags;
+            let { title, artist } = tag.tags;
             if (title.length > 30) {
                 title = `${title.substring(0, 30)}...`
             }
             if (artist.length > 30) {
                 artist = `${artist.substring(0, 30)}...`
             }
-			titleEl.textContent = title;
-			artistEl.textContent = artist;
-			image.src = image_blur = `data:${format};base64,${window.btoa(base64String)}`;
-			music.src = URL.createObjectURL(file);
+            titleEl.textContent = title;
+            artistEl.textContent = artist;
+            image.src = image_blur = `data:${format};base64,${window.btoa(base64String)}`;
+            music.src = URL.createObjectURL(file);
             music.load();
-			playSong();
+            playSong();
         },
         onError: function (error) {
             console.log(error);
@@ -118,9 +126,9 @@ function newAudioFile(index) {
 }
 
 function loadAudioFiles(event) {
-    var files = this.files;
-    var file;
-    for (var i = 0; i < files.length; i++) {
+    let { files } = this;
+    let file;
+    for (let i = 0; i < files.length; i++) {
         file = files.item(i);
         file = files[i];
         songList.push(file);

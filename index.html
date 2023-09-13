@@ -10,10 +10,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
 </head>
 <body>
-    <div class="player-container">
+    <div class="player-container" id="player-container">
         <div class="img-container">
             <label for="file-input">
-            <img draggable="false" src="https://e-cdns-images.dzcdn.net/images/cover/256d2f17d6dfde632b845e757ac41746/500x500-000000-80-0-0.jpg" alt="Album art">
+            <img draggable="false" src="https://e-cdns-images.dzcdn.net/images/cover/256d2f17d6dfde632b845e757ac41746/500x500-000000-80-0-0.jpg" alt="Album art" crossorigin="anonymous">
             </label>
             <input id="file-input" type="file" multiple accept="audio/*" hidden/>
         </div>
@@ -33,6 +33,7 @@
             <i class="fas fa-forward" id="next" title="Next"></i>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
     <!-- Script -->
     <script src="script.js"></script>
 </body>
